@@ -1,15 +1,51 @@
+# ───────────────────────────── Android / Gradle ─────────────────────────────
 *.iml
-.gradle
+.gradle/
 /local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
 /build
 /captures
 .externalNativeBuild
 .cxx
-local.properties
+
+# Per-module build outputs
+**/build/
+app/release/
+app/debug/
+
+# Generated APK / AAB / mapping
+*.apk
+*.aab
+*.ap_
+*.dex
+output.json
+
+# ───────────────────────────── IDE: Android Studio / IntelliJ ────────────────
+# IDE config is developer-specific and should not be committed.
+.idea/
+
+# ───────────────────────────── Kotlin / compiler ────────────────────────────
+.kotlin/
+
+# ───────────────────────────── Signing & secrets ────────────────────────────
+# Never commit real signing material or credentials.
+# A redacted template is committed as keystore.properties.example instead.
+keystore.properties
+*.keystore
+*.jks
+/keystore/
+
+# ───────────────────────────── OS / editor noise ────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Stray vim write-quit artifact (see repo history)
+wq
+
+# ───────────────────────────── Logs ─────────────────────────────────────────
+*.log
+
+# NOTE: gradle/wrapper/gradle-wrapper.jar IS intentionally committed so the
+# Gradle wrapper works on a fresh clone. Do not ignore it.
