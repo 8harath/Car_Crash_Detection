@@ -71,16 +71,17 @@
             android:theme="@style/Theme.CC" />
 
         <activity
-<<<<<<< HEAD
             android:name=".ui.testing.BluetoothTestActivity"
-=======
+            android:exported="false"
+            android:theme="@style/Theme.CC" />
+
+        <activity
             android:name=".ui.settings.MqttSettingsActivity"
             android:exported="false"
             android:theme="@style/Theme.CC" />
 
         <activity
             android:name=".ui.testing.MqttTestActivity"
->>>>>>> mqtt
             android:exported="false"
             android:theme="@style/Theme.CC" />
 
