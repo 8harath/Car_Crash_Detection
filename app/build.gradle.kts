@@ -17,11 +17,11 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.example.cc"
+    namespace = "com.bharath.carcrashdetection"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.cc"
+        applicationId = "com.bharath.carcrashdetection"
         minSdk = 24
         targetSdk = 34
         versionCode = 2
