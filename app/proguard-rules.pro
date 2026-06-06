@@ -82,8 +82,8 @@
 -keepclassmembers class org.eclipse.paho.client.mqttv3.** { *; }
 
 # Preserve our custom AndroidX MQTT client
--keep class com.example.cc.util.AndroidXMqttClient { *; }
--keepclassmembers class com.example.cc.util.AndroidXMqttClient { *; }
+-keep class com.bharath.carcrashdetection.util.AndroidXMqttClient { *; }
+-keepclassmembers class com.bharath.carcrashdetection.util.AndroidXMqttClient { *; }
 
 # Preserve MQTT callback methods
 -keepclassmembers class org.eclipse.paho.client.mqttv3.MqttClient {
