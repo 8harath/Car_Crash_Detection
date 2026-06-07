@@ -1,108 +1,41 @@
-# Quick Start Guide - Phase 1
+# Quick Start
 
-## 🚀 Running the Car Crash Detection App
+The fastest path to seeing the app run. For the full system (ESP32 + broker + two phones), use
+[SETUP_GUIDE.md](SETUP_GUIDE.md).
 
-### Option 1: Android Studio (Recommended)
+## Prerequisites
+- Android Studio (recent) + JDK 11
+- An Android device or emulator, API 24+ (Android 7.0+)
+- *(To exercise messaging)* a reachable Mosquitto broker and ideally a second device
 
-1. **Open Android Studio**
-2. **Open Project**: File → Open → Select the project folder
-3. **Wait for Sync**: Let Gradle sync complete
-4. **Connect Device**: 
-   - Enable Developer Options on your Android phone
-   - Enable USB Debugging
-   - Connect via USB cable
-5. **Run App**: Click the green play button ▶️
+## Run it
 
-### Option 2: Direct APK Build
+**Android Studio (recommended)**
+1. File → Open → select the project folder; let Gradle sync finish.
+2. Connect a device (USB debugging on) or start an emulator.
+3. Press **Run** ▶️.
 
-1. **Set up Java**: Install JDK 11+ and set JAVA_HOME
-2. **Run Build Script**: Double-click `build_apk.bat`
-3. **Install APK**: Transfer `app-debug.apk` to your device and install
-
-### Option 3: Command Line
-
+**Command line**
 ```bash
-# Clean and build
-.\gradlew.bat clean
-.\gradlew.bat assembleDebug
-
-# Install on connected device
-.\gradlew.bat installDebug
+./gradlew assembleDebug
+./gradlew installDebug
 ```
 
-## 📱 App Features to Test
+## First launch — what to click
+1. **Role selection** — choose **Crash Victim** (Publisher) or **Emergency Responder** (Subscriber).
+2. **Enter your name** — stored in the local Room database.
+3. **MQTT Settings** — enter your broker **IP** + **port** (default `192.168.0.101:1883`) and enable the service. (No code change needed to switch brokers.)
+4. **Publisher:** manage your medical profile, connect to the ESP32 in **Bluetooth Test**, and trigger an alert.
+   **Subscriber:** watch the alert list; open an incident to see medical info; send a response/ETA.
 
-### 1. Role Selection Screen
-- ✅ Choose between "Crash Victim" and "Emergency Responder"
-- ✅ Visual feedback when selecting roles
-- ✅ Continue button enables only after selection
+## Smoke-test checklist
+- [ ] App launches without crashing
+- [ ] Role selection + name entry work and persist across restarts
+- [ ] MQTT Settings saves the broker IP/port and shows a connected status
+- [ ] (Two devices) a Publisher alert appears on the Subscriber
+- [ ] (With hardware) Bluetooth Test discovers `ESP32_CarCrash` and shows live data
 
-### 2. Name Input Dialog
-- ✅ Enter your name when prompted
-- ✅ Validation prevents empty names
-- ✅ User data saved to local database
-
-### 3. Publisher Mode (Crash Victim)
-- ✅ Large SOS emergency button
-- ✅ Red color scheme for emergency context
-- ✅ Button shows "Emergency alert sent!" message
-- ✅ Back navigation to role selection
-
-### 4. Subscriber Mode (Emergency Responder)
-- ✅ Blue color scheme for responder context
-- ✅ Status display showing "MQTT not implemented yet"
-- ✅ Back navigation to role selection
-
-### 5. Database Operations
-- ✅ User creation and storage
-- ✅ Role persistence across app sessions
-- ✅ Database test logs in Android Studio logcat
-
-## 🔍 Testing Checklist
-
-- [ ] App launches without crashes
-- [ ] Role selection works correctly
-- [ ] Name input dialog appears and validates
-- [ ] Navigation between screens works
-- [ ] Database operations complete successfully
-- [ ] UI looks good on different screen sizes
-- [ ] Back navigation works from both modes
-
-## 🐛 Troubleshooting
-
-### App Won't Launch
-- Check logcat for error messages
-- Ensure device API level is 24+ (Android 7.0+)
-- Verify all permissions are granted
-
-### Build Errors
-- Install JDK 11+ and set JAVA_HOME
-- Update Android Studio to latest version
-- Invalidate caches: File → Invalidate Caches
-
-### Database Issues
-- Check logcat for "DatabaseTest" messages
-- Verify Room database initialization
-- Clear app data if needed
-
-## 📊 What's Working
-
-✅ **Complete Phase 1 Implementation**
-- MVVM architecture with Repository pattern
-- Room database with full CRUD operations
-- Role-based navigation system
-- Material Design UI components
-- Error handling and loading states
-- Database testing and validation
-
-## 🎯 Next Steps
-
-The app is ready for **Phase 2: MQTT Communication Core**
-- MQTT client integration
-- Connection management
-- Message publishing/subscription
-- Real-time communication with your Mosquitto broker
-
----
-
-**Status**: ✅ Phase 1 Complete - Ready for Testing! 
+## If something's off
+- App won't launch / crashes → check Logcat; confirm API 24+ and granted permissions.
+- Build errors → JDK 11 set, Android Studio updated, then **File → Invalidate Caches / Restart**.
+- MQTT won't connect → see [TROUBLESHOOTING.md](TROUBLESHOOTING.md).

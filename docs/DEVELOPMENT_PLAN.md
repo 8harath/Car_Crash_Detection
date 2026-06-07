@@ -1,5 +1,11 @@
 # Car Crash Detection MQTT System - Development Phase Breakdown
 
+> **Archival note.** This is the phased plan followed during the **PNT internship** that produced
+> this project. It is preserved as a record of scope and progression. A couple of details evolved
+> during implementation — most notably, dependency injection was implemented as a lightweight
+> **manual `AppModule`** rather than Dagger/Hilt as planned below. For the system as actually built,
+> see [ARCHITECTURE.md](ARCHITECTURE.md).
+
 ## Project Overview Summary
 This Android application serves as a dual-mode communication interface for a car crash detection system using MQTT protocol. The app operates in Publisher mode (crash victims) and Subscriber mode (emergency responders), integrating with ESP32 hardware and a local MQTT broker for academic demonstration purposes.
 
