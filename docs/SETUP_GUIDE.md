@@ -1,220 +1,138 @@
-# Complete Setup Guide - ESP32 & MQTT Broker
+# Setup Guide
 
-## 🔧 **ESP32 Setup Instructions**
+End-to-end setup for the whole system: the ESP32 sensor node, the Mosquitto MQTT broker, and the
+Android app — finishing with a two-phone live test. For a no-hardware "just run the app" path, see
+[QUICK_START.md](QUICK_START.md).
 
-### **Step 1: Install Required Libraries**
-
-Open Arduino IDE and install these libraries:
-1. **ESP32 Board Package**: Tools → Board → Boards Manager → Search "ESP32" → Install
-2. **MPU6050 Library**: Sketch → Include Library → Manage Libraries → Search "MPU6050" → Install "MPU6050 by Electronic Cats"
-3. **Bluetooth Libraries**: Already included with ESP32 board package
-
-### **Step 2: Configure Arduino IDE**
-
-1. **Select Board**: Tools → Board → ESP32 Arduino → ESP32 Dev Module
-2. **Select Port**: Tools → Port → Choose your ESP32 COM port
-3. **Upload Speed**: Tools → Upload Speed → 115200
-
-### **Step 3: Upload ESP32 Code**
-
-1. **Open the file**: `ESP32_BLE_TEST.ino` in your project folder
-2. **Verify Code**: Click the checkmark (✓) to compile
-3. **Upload Code**: Click the arrow (→) to upload to ESP32
-4. **Monitor Output**: Tools → Serial Monitor (set to 115200 baud)
-
-### **Step 4: Verify ESP32 Setup**
-
-You should see this output in Serial Monitor:
+```mermaid
+flowchart LR
+    A[1. Flash ESP32] --> B[2. Run Mosquitto broker]
+    B --> C[3. Install + configure app]
+    C --> D[4. Two-phone live test]
 ```
-ESP32 Car Crash Detection System Starting...
-MPU6050 connection successful
-Bluetooth Classic started
-Device name: ESP32_CrashDetector
-BLE started
-Waiting for connections...
-```
-
-### **Step 5: Hardware Connections**
-
-Connect MPU6050 to ESP32:
-- **VCC** → **3.3V**
-- **GND** → **GND**
-- **SCL** → **GPIO 22**
-- **SDA** → **GPIO 21**
-
-## 📡 **MQTT Broker Setup**
-
-### **Step 1: Install Mosquitto MQTT Broker**
-
-#### **Windows:**
-```bash
-# Download from: https://mosquitto.org/download/
-# Or use Chocolatey:
-choco install mosquitto
-
-# Start the service:
-net start mosquitto
-```
-
-#### **Alternative - Docker:**
-```bash
-docker run -d --name mosquitto -p 1883:1883 -p 9001:9001 eclipse-mosquitto:latest
-```
-
-### **Step 2: Configure Mosquitto**
-
-1. **Copy configuration**: Copy `mosquitto_config.conf` to your Mosquitto installation directory
-2. **Restart service**: `net stop mosquitto && net start mosquitto`
-
-### **Step 3: Test MQTT Broker**
-
-Run the test script:
-```bash
-check_mosquitto.bat
-```
-
-You should see:
-```
-✓ Mosquitto service found
-✓ Port 1883 is listening
-✓ MQTT connection test successful
-```
-
-### **Step 4: Find Your Computer's IP Address**
-
-```bash
-# Windows
-ipconfig | findstr "IPv4"
-
-# Example output: 192.168.1.100
-```
-
-## 📱 **Android App MQTT Configuration**
-
-### **Step 1: Update MQTT Broker URL**
-
-Edit `app/src/main/java/com/example/cc/util/MqttConfig.kt`:
-
-```kotlin
-// Change this line to your computer's IP address
-const val BROKER_URL = "tcp://YOUR_IP_ADDRESS:1883"
-```
-
-Replace `YOUR_IP_ADDRESS` with your computer's actual IP (e.g., `192.168.1.100`).
-
-### **Step 2: Rebuild and Install App**
-
-```bash
-# Clean and rebuild
-.\gradlew.bat clean
-.\gradlew.bat assembleDebug
-
-# Install on connected devices
-.\gradlew.bat installDebug
-```
-
-## 🔄 **Testing the Complete System**
-
-### **Test 1: MQTT Communication**
-
-1. **Start MQTT Broker**: Ensure Mosquitto is running
-2. **Phone 1 (Publisher)**: Open app → Select "Crash Victim" → Enter name
-3. **Phone 2 (Subscriber)**: Open app → Select "Emergency Responder" → Enter name
-4. **Test Communication**: On Phone 1, press the SOS button
-5. **Verify**: Phone 2 should receive the emergency alert
-
-### **Test 2: Bluetooth Discovery**
-
-1. **Power ESP32**: Ensure ESP32 is running with uploaded code
-2. **Phone 1**: Open app → Publisher mode → Press "Discover Devices"
-3. **Check Logs**: In Android Studio Logcat, look for:
-   ```
-   BLUETOOTH DISCOVERY DEBUG
-   Bluetooth enabled: true
-   BLUETOOTH_SCAN permission: GRANTED
-   ACCESS_FINE_LOCATION permission: GRANTED
-   Found device: ESP32_CrashDetector
-   ```
-
-### **Test 3: ESP32 Communication**
-
-1. **Connect to ESP32**: Select "ESP32_CrashDetector" from discovered devices
-2. **Test Commands**: Send test commands from Android app
-3. **Monitor ESP32**: Check Serial Monitor for received commands
-
-## 🛠️ **Troubleshooting**
-
-### **ESP32 Issues**
-
-#### **Upload Fails**
-- Check USB cable and port
-- Hold BOOT button during upload
-- Try different USB cable
-
-#### **MPU6050 Not Found**
-- Check wiring connections
-- Verify I2C address (usually 0x68)
-- Test with I2C scanner sketch
-
-#### **Bluetooth Not Working**
-- Ensure ESP32 has Bluetooth enabled
-- Check if device appears in phone's Bluetooth settings
-- Verify UUIDs match between ESP32 and Android app
-
-### **MQTT Issues**
-
-#### **Connection Failed**
-- Check if Mosquitto is running: `net start mosquitto`
-- Verify IP address in MqttConfig.kt
-- Check firewall settings (allow port 1883)
-- Test with MQTT client: `mosquitto_pub -h localhost -t test -m "hello"`
-
-#### **Messages Not Received**
-- Check topic names match
-- Verify QoS settings
-- Check network connectivity between phones and computer
-
-### **Android App Issues**
-
-#### **Bluetooth Discovery Fails**
-- Grant ALL permissions (Location, Bluetooth, etc.)
-- Enable Location Services
-- Check Android Studio Logcat for detailed error messages
-
-#### **App Crashes**
-- Check Logcat for specific error messages
-- Verify all dependencies are properly installed
-- Try clearing app data and reinstalling
-
-## 📋 **Quick Test Checklist**
-
-- [ ] ESP32 code uploaded successfully
-- [ ] ESP32 Serial Monitor shows "Waiting for connections..."
-- [ ] Mosquitto MQTT broker running on port 1883
-- [ ] Computer IP address updated in MqttConfig.kt
-- [ ] Android app rebuilt and installed on both phones
-- [ ] All permissions granted on both phones
-- [ ] MQTT communication working (SOS button sends alerts)
-- [ ] Bluetooth discovery finds ESP32 device
-- [ ] ESP32 connection established
-
-## 🎯 **Success Indicators**
-
-### **ESP32 Working**
-- Serial Monitor shows continuous sensor data
-- Device appears as "ESP32_CrashDetector" in Bluetooth settings
-- LED flashes when crash detected
-
-### **MQTT Working**
-- Emergency alerts appear on subscriber phone
-- No connection errors in Android Studio Logcat
-- Mosquitto logs show message activity
-
-### **Bluetooth Working**
-- ESP32 appears in device discovery
-- Connection established successfully
-- Sensor data received in Android app
 
 ---
 
-**Need Help?** Check the troubleshooting section above or run `test_bluetooth_setup.bat` for system diagnostics.
+## Part 1 — ESP32 sensor node
+
+Full wiring and firmware details are in [HARDWARE.md](HARDWARE.md) and
+[../firmware/README.md](../firmware/README.md). In short:
+
+1. Install the **ESP32 board package** (Arduino Boards Manager → "esp32" by Espressif) and the
+   **MPU6050** and **TinyGPS++** libraries.
+2. Wire the MPU6050 (SDA→GPIO21, SCL→GPIO22) and GPS (TX→GPIO16, RX→GPIO17); power from 3.3 V.
+3. Open `firmware/car_crash_sensor/car_crash_sensor.ino`, select **ESP32 Dev Module** + your port,
+   and upload.
+4. Open Serial Monitor @ **115200** and confirm: `BLE Server ready - waiting for connections...`.
+
+The node advertises as **`ESP32_CarCrash`**. (Hardware is optional — the app still runs and you can
+exercise MQTT with two phones; you just won't have real sensor data.)
+
+---
+
+## Part 2 — Mosquitto MQTT broker
+
+The app expects a Mosquitto broker reachable on your LAN (default `192.168.0.101:1883`). Helper
+scripts live in `scripts/` — see [../scripts/README.md](../scripts/README.md).
+
+### Install
+
+**macOS**
+```bash
+brew install mosquitto
+```
+
+**Linux (Debian/Ubuntu)**
+```bash
+sudo apt-get install mosquitto mosquitto-clients
+```
+
+**Windows** — download from <https://mosquitto.org/download/> (or `choco install mosquitto`).
+
+**Docker (any OS)**
+```bash
+docker run -d --name mosquitto -p 1883:1883 eclipse-mosquitto:latest
+```
+
+### Run it with the project config
+```bash
+# from the scripts/ directory
+mosquitto -c mosquitto_local.conf -v        # or: ./start_mosquitto.sh  /  start_mosquitto.bat
+```
+The sample configs (`scripts/mosquitto_config.conf`, `scripts/mosquitto_local.conf`) listen on
+**1883** and **allow anonymous connections** — convenient for a lab, but enable authentication +
+TLS for anything real.
+
+### Find your broker's IP (you'll type this into the app)
+```bash
+# macOS / Linux
+ipconfig getifaddr en0      # macOS
+hostname -I                 # Linux
+# Windows
+ipconfig | findstr IPv4
+```
+
+### Verify the broker
+```bash
+# subscribe in one terminal…
+mosquitto_sub -h localhost -t test/connection -v
+# …publish in another
+mosquitto_pub -h localhost -t test/connection -m "hello"
+```
+You can also run the Python checks: `python scripts/test_local_broker.py`.
+
+---
+
+## Part 3 — Android app
+
+### Build & install
+```bash
+git clone git@github.com:8harath/Car_Crash_Detection.git
+cd Car_Crash_Detection
+./gradlew assembleDebug
+./gradlew installDebug
+```
+(or open in Android Studio and press **Run**.)
+
+### Configure the broker — in the app, not in code
+> Older notes said to edit a `BROKER_URL` constant in `MqttConfig.kt`. **That is no longer how it
+> works.** The broker is configured at runtime and stored in device preferences.
+
+1. Launch the app and pick a role.
+2. Open **MQTT Settings**.
+3. Enter your broker's **IP** and **port** (default `192.168.0.101` / `1883`). Input is validated.
+4. Save and **enable** the MQTT service. No rebuild needed.
+
+### Grant permissions
+On first run, grant **Bluetooth (scan/connect)**, **Location** (required for BLE scanning), and
+**Camera** (only if you add a medical-profile photo).
+
+---
+
+## Part 4 — Two-phone live test
+
+1. Ensure Mosquitto is running and both phones are on the **same network** as the broker.
+2. **Phone A → Publisher:** pick "Crash Victim", set the broker IP, enable MQTT.
+3. **Phone B → Subscriber:** pick "Emergency Responder", set the same broker IP, enable MQTT.
+4. On **Phone A**, trigger an emergency alert.
+5. **Phone B** should receive it in the alert list; open it to see location + medical info.
+6. From **Phone B**, send a response/ETA — **Phone A** should show the acknowledgement.
+
+### With the ESP32 in the loop
+1. Power the node and confirm `ESP32_CarCrash` is advertising.
+2. On the Publisher, open **Bluetooth Test**, scan, and connect.
+3. Watch live `ACC|IMPACT|GPS` values; a strong impact crosses the threshold and drives an alert.
+
+---
+
+## Setup checklist
+
+- [ ] ESP32 flashed; Serial shows "BLE Server ready"
+- [ ] `ESP32_CarCrash` visible in a BLE scanner
+- [ ] Mosquitto running on port 1883
+- [ ] Broker IP entered in the app's **MQTT Settings** (both phones)
+- [ ] All permissions granted
+- [ ] Publisher alert is received by the Subscriber
+- [ ] Subscriber acknowledgement is received by the Publisher
+
+Stuck? See [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
