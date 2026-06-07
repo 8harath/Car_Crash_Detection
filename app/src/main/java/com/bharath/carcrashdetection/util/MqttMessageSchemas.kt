@@ -1,4 +1,4 @@
-package com.example.cc.util
+package com.bharath.carcrashdetection.util
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
