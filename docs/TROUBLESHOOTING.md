@@ -1,236 +1,85 @@
-# Troubleshooting Guide
+# Troubleshooting
 
-## Common Issues and Solutions
-
-### MQTT Connection Issues
-
-#### Connection Fails
-**Symptoms**: App shows "MQTT Connection Failed" or similar error
-**Solutions**:
-1. **Verify Broker Status**
-   ```bash
-   # Windows
-   check_mosquitto.bat
-   
-   # Linux/Mac
-   ./check_mosquitto.sh
-   ```
-
-2. **Check Network Connectivity**
-   - Ensure device and broker are on same network
-   - Test with `ping <broker-ip>`
-   - Verify firewall settings
-
-3. **Verify Broker Configuration**
-   - Check `MqttConfig.kt` for correct broker URL
-   - Ensure port 1883 is open
-   - Verify broker accepts anonymous connections
-
-#### Intermittent Disconnections
-**Symptoms**: Connection drops randomly
-**Solutions**:
-1. **Enable Auto-Reconnection**
-   - Check MQTT client settings
-   - Verify keep-alive interval (60 seconds recommended)
-
-2. **Network Stability**
-   - Check WiFi signal strength
-   - Consider using wired connection for broker
-   - Monitor network interference
-
-### ESP32 Integration Issues
-
-#### Bluetooth Not Connecting
-**Symptoms**: ESP32 not found or connection fails
-**Solutions**:
-1. **Verify ESP32 Setup**
-   ```bash
-   test_bluetooth_setup.bat
-   ```
-
-2. **Check Permissions**
-   - Ensure Bluetooth permissions granted
-   - Enable location services (required for BLE)
-
-3. **ESP32 Firmware**
-   - Verify correct firmware uploaded
-   - Check Serial Monitor for ESP32 status
-   - Ensure MPU6050 properly connected
-
-#### Sensor Data Issues
-**Symptoms**: No sensor readings or incorrect data
-**Solutions**:
-1. **Hardware Connections**
-   - Verify MPU6050 wiring
-   - Check power supply (3.3V)
-   - Ensure proper I2C connections
-
-2. **Calibration**
-   - Run sensor calibration routine
-   - Check for magnetic interference
-   - Verify sensor orientation
-
-### App Performance Issues
-
-#### Slow Startup
-**Symptoms**: App takes long time to launch
-**Solutions**:
-1. **Database Optimization**
-   - Check database size
-   - Clear unnecessary data
-   - Optimize queries
-
-2. **Memory Management**
-   - Monitor memory usage
-   - Close background apps
-   - Restart device if needed
-
-#### UI Responsiveness
-**Symptoms**: App feels sluggish or unresponsive
-**Solutions**:
-1. **Background Processes**
-   - Check for heavy background tasks
-   - Optimize MQTT message processing
-   - Reduce UI update frequency
-
-2. **Device Performance**
-   - Ensure sufficient RAM available
-   - Check CPU usage
-   - Update Android version if possible
-
-### Build and Development Issues
-
-#### Gradle Sync Fails
-**Symptoms**: Android Studio shows sync errors
-**Solutions**:
-1. **Network Issues**
-   - Check internet connection
-   - Use VPN if needed
-   - Clear Gradle cache
-
-2. **Dependency Issues**
-   - Update Gradle version
-   - Check dependency versions
-   - Invalidate caches and restart
-
-#### Build Errors
-**Symptoms**: Compilation fails
-**Solutions**:
-1. **Java/Kotlin Issues**
-   - Verify JDK 11+ installed
-   - Set JAVA_HOME correctly
-   - Update Android Studio
-
-2. **Code Issues**
-   - Check for syntax errors
-   - Verify imports
-   - Clean and rebuild project
-
-### Database Issues
-
-#### Data Loss
-**Symptoms**: App data disappears after restart
-**Solutions**:
-1. **Database Migration**
-   - Check for schema changes
-   - Verify migration scripts
-   - Backup data before updates
-
-2. **Storage Issues**
-   - Check device storage space
-   - Verify database file permissions
-   - Clear app data if corrupted
-
-### Testing and Debugging
-
-#### MQTT Testing
-```bash
-# Test broker connectivity
-test_mqtt_broker.bat
-
-# Test local broker
-test_mqtt_local_broker.bat
-
-# Test communication
-diagnose_mqtt_communication.bat
-```
-
-#### Python Test Scripts
-```bash
-# Test broker functionality
-python test_mqtt_broker.py
-
-# Test local broker
-python test_local_broker.py
-
-# Test network validation
-python test_ip_validation_and_messaging.py
-```
-
-### Debug Tools
-
-#### Android Studio
-1. **Logcat**: View detailed logs
-   - Filter by app package
-   - Search for error keywords
-   - Monitor MQTT messages
-
-2. **Database Inspector**: View Room database
-   - Located in View → Tool Windows → App Inspection
-   - Monitor data changes
-   - Verify CRUD operations
-
-3. **Layout Inspector**: Debug UI issues
-   - Inspect view hierarchy
-   - Check layout performance
-   - Verify view states
-
-#### Built-in Debug Features
-1. **MQTT Test Activity**: Test MQTT functionality
-2. **System Health Monitor**: Monitor app performance
-3. **Production Dashboard**: View system status
-
-### Emergency Recovery
-
-#### App Won't Launch
-1. **Clear App Data**
-   - Settings → Apps → Car Crash Detection → Storage → Clear Data
-   - Reinstall app if necessary
-
-2. **Check Permissions**
-   - Verify all required permissions granted
-   - Re-grant permissions if needed
-
-#### Complete Reset
-1. **Uninstall App**
-2. **Clear Device Storage**
-3. **Reinstall Fresh Copy**
-4. **Reconfigure Settings**
-
-### Performance Optimization
-
-#### Memory Management
-- Monitor memory usage in Android Studio
-- Optimize image loading and caching
-- Reduce background service usage
-
-#### Battery Optimization
-- Disable unnecessary background processes
-- Optimize MQTT keep-alive intervals
-- Use efficient data structures
-
-#### Network Optimization
-- Compress MQTT messages
-- Implement message queuing
-- Use efficient serialization formats
-
-### Support Resources
-
-1. **Documentation**: Check relevant guides in `/docs` folder
-2. **Logs**: Review Android Studio logcat for detailed errors
-3. **Test Scripts**: Use provided test scripts for validation
-4. **Community**: Check project issues and discussions
+Symptom → fix for the most common problems. Broker scripts referenced here live in `scripts/`
+(see [../scripts/README.md](../scripts/README.md)).
 
 ---
 
-**Note**: Always test solutions in a development environment before applying to production.
+## MQTT
+
+### "Connection failed" / never connects
+1. **Is the broker running?** `scripts/check_mosquitto.bat`, or `mosquitto_sub -h localhost -t test -v`.
+2. **Right address?** Open the app's **MQTT Settings** and confirm the **IP + port** match your
+   broker (default `192.168.0.101:1883`). The broker is set *in the app*, not in `MqttConfig.kt`.
+3. **Same network?** Phone and broker must be on the same LAN. Test with `ping <broker-ip>`.
+4. **Firewall?** Allow inbound TCP **1883** on the broker machine.
+5. **Anonymous allowed?** The sample configs permit anonymous clients; if you enabled auth, set the
+   username/password in MQTT Settings.
+
+### Connected, but messages don't arrive
+- Confirm both devices use the **same broker** and the roles are correct (Publisher vs Subscriber).
+- Topics must match `util/MqttTopics.kt` (`emergency/...`). Subscribers listen on the `emergency/alerts/+`
+  family; publishers post to `emergency/alerts/{incidentId}`.
+- Watch Logcat for publish/subscribe lines, or run `python scripts/test_local_broker.py` to prove the
+  broker round-trips messages independently of the app.
+
+### Drops intermittently
+- Check Wi-Fi signal; prefer the broker on a wired/stable host.
+- Keep-alive is 60 s and reconnect retries 5× with a 5 s delay (`MqttConfig`).
+
+---
+
+## ESP32 / Bluetooth
+
+### ESP32 not found during scan
+1. Serial Monitor (115200) should show `BLE Server ready - waiting for connections...`.
+2. Confirm it advertises as **`ESP32_CarCrash`** with a BLE scanner like **nRF Connect**.
+3. Grant **Bluetooth** *and* **Location** permissions — Android requires location for BLE scanning.
+4. **UUIDs must match.** The firmware and `util/Esp32BluetoothService.kt` must share
+   service `4fafc201-…` and characteristic `beb5483e-…`.
+
+### Connects but no sensor data
+- Verify MPU6050 wiring (SDA→GPIO21, SCL→GPIO22, 3.3 V) and the GPS UART (GPIO16/17).
+- The Serial Monitor should print `Sent via BLE: ACC:…|IMPACT:…|GPS:…` every 100 ms.
+
+### Upload to ESP32 fails
+- Try a different USB cable/port; hold the **BOOT** button during upload.
+
+---
+
+## Build & app
+
+### Gradle sync / build errors
+- JDK **11** installed and selected; Android Studio up to date.
+- **File → Invalidate Caches / Restart**, then a clean build.
+- This module's namespace/applicationId is `com.bharath.carcrashdetection`.
+
+### App crashes on launch
+- Check Logcat (filter by the app package). Confirm API 24+ and that runtime permissions were granted.
+- Clearing app data resets the local DB and preferences (including the saved broker).
+
+### Data disappears after an update
+- The Room DB uses **destructive migration** — a schema-version bump intentionally wipes local data.
+  Export/back up before changing entities.
+
+---
+
+## Built-in debug tools
+- **MQTT Test** and **Bluetooth Test** screens in the app for isolated checks.
+- **Logcat** for live logs; **App Inspection → Database Inspector** to view Room contents.
+
+---
+
+## Known limitations (current state)
+
+> Salvaged and updated from earlier internal test notes — these reflect what is and isn't solid.
+
+- **BLE is the supported sensor transport.** `Esp32BluetoothService` also contains
+  **Bluetooth-Classic** and, via `Esp32WifiDirectService`, **Wi-Fi-Direct** paths that are only
+  partially implemented. Use the BLE firmware in `firmware/` (its UUIDs match the app). An older
+  experimental firmware advertised different UUIDs (`0000ffe0/0000ffe1`) and will **not** connect.
+- **Local, unsecured broker by design.** The sample Mosquitto config allows anonymous connections.
+  For anything beyond a lab demo, enable TLS + authentication.
+- **`production/`, `demo/`, `testing/` packages are scaffolding** — useful structure, but not all
+  flows are wired into the UI (see [PRODUCTION_GUIDE.md](PRODUCTION_GUIDE.md)).
+- **Not a certified safety system.** Threshold-based detection tuned for demonstration only.
