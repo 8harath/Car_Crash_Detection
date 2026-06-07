@@ -1,4 +1,4 @@
-package com.example.cc.util
+package com.bharath.carcrashdetection.util
 
 import android.app.Service
 import android.content.Intent
@@ -20,17 +20,17 @@ import org.eclipse.paho.client.mqttv3.*
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.MqttMessage
 // Import our custom AndroidX-compatible MQTT client
-import com.example.cc.util.AndroidXMqttClient
-import com.example.cc.util.MqttConfig
+import com.bharath.carcrashdetection.util.AndroidXMqttClient
+import com.bharath.carcrashdetection.util.MqttConfig
 
 class MqttService : Service() {
     enum class ConnectionState { CONNECTING, CONNECTED, DISCONNECTED }
     
     companion object {
         val connectionState = MutableLiveData(ConnectionState.DISCONNECTED)
-        const val ACTION_PUBLISH = "com.example.cc.mqtt.ACTION_PUBLISH"
-        const val ACTION_ENABLE = "com.example.cc.mqtt.ACTION_ENABLE"
-        const val ACTION_DISABLE = "com.example.cc.mqtt.ACTION_DISABLE"
+        const val ACTION_PUBLISH = "com.bharath.carcrashdetection.mqtt.ACTION_PUBLISH"
+        const val ACTION_ENABLE = "com.bharath.carcrashdetection.mqtt.ACTION_ENABLE"
+        const val ACTION_DISABLE = "com.bharath.carcrashdetection.mqtt.ACTION_DISABLE"
         const val ACTION_UPDATE_SETTINGS = "UPDATE_SETTINGS"
         const val EXTRA_TOPIC = "extra_topic"
         const val EXTRA_PAYLOAD = "extra_payload"
@@ -287,7 +287,7 @@ class MqttService : Service() {
         if (!isValidTopic(topic)) {
             Log.e(TAG, "Invalid topic: $topic")
             // Send broadcast to notify UI of invalid topic
-            val intent = Intent("com.example.cc.MESSAGE_PUBLISHED")
+            val intent = Intent("com.bharath.carcrashdetection.MESSAGE_PUBLISHED")
             intent.putExtra("topic", topic)
             intent.putExtra("success", false)
             intent.putExtra("error", "Invalid topic: $topic")
@@ -298,7 +298,7 @@ class MqttService : Service() {
         if (!isMqttEnabled) {
             Log.w(TAG, "MQTT is not enabled by user, cannot publish message to: $topic")
             // Send broadcast to notify UI that MQTT is not enabled
-            val intent = Intent("com.example.cc.MESSAGE_PUBLISHED")
+            val intent = Intent("com.bharath.carcrashdetection.MESSAGE_PUBLISHED")
             intent.putExtra("topic", topic)
             intent.putExtra("success", false)
             intent.putExtra("error", "MQTT not enabled")
@@ -318,7 +318,7 @@ class MqttService : Service() {
                     override fun onSuccess(asyncActionToken: IMqttToken?) {
                         Log.i(TAG, "✅ Message published successfully to $topic")
                         // Send broadcast to notify UI of successful publish
-                        val intent = Intent("com.example.cc.MESSAGE_PUBLISHED")
+                        val intent = Intent("com.bharath.carcrashdetection.MESSAGE_PUBLISHED")
                         intent.putExtra("topic", topic)
                         intent.putExtra("success", true)
                         intent.putExtra("payload", payload)
@@ -328,7 +328,7 @@ class MqttService : Service() {
                         Log.e(TAG, "❌ Publish failed for $topic: ${exception?.message}")
                         MqttMessageQueue.enqueue(topic, payload, qos, retained)
                         // Send broadcast to notify UI of failed publish
-                        val intent = Intent("com.example.cc.MESSAGE_PUBLISHED")
+                        val intent = Intent("com.bharath.carcrashdetection.MESSAGE_PUBLISHED")
                         intent.putExtra("topic", topic)
                         intent.putExtra("success", false)
                         intent.putExtra("error", exception?.message ?: "Unknown error")
@@ -339,7 +339,7 @@ class MqttService : Service() {
                 Log.e(TAG, "❌ Publish exception for $topic: ${e.message}")
                 MqttMessageQueue.enqueue(topic, payload, qos, retained)
                 // Send broadcast to notify UI of failed publish
-                val intent = Intent("com.example.cc.MESSAGE_PUBLISHED")
+                val intent = Intent("com.bharath.carcrashdetection.MESSAGE_PUBLISHED")
                 intent.putExtra("topic", topic)
                 intent.putExtra("success", false)
                 intent.putExtra("error", e.message ?: "Unknown exception")
@@ -349,7 +349,7 @@ class MqttService : Service() {
             Log.w(TAG, "❌ Not connected, enqueuing message for $topic")
             MqttMessageQueue.enqueue(topic, payload, qos, retained)
             // Send broadcast to notify UI that message was queued
-            val intent = Intent("com.example.cc.MESSAGE_PUBLISHED")
+            val intent = Intent("com.bharath.carcrashdetection.MESSAGE_PUBLISHED")
             intent.putExtra("topic", topic)
             intent.putExtra("success", false)
             intent.putExtra("error", "MQTT not connected - message queued")
@@ -501,7 +501,7 @@ class MqttService : Service() {
             Log.w(TAG, "Network not available, cannot connect to MQTT")
             connectionState.postValue(ConnectionState.DISCONNECTED)
             // Send broadcast to notify UI of network error
-            val intent = Intent("com.example.cc.CONNECTION_STATUS")
+            val intent = Intent("com.bharath.carcrashdetection.CONNECTION_STATUS")
             intent.putExtra("status", "DISCONNECTED")
             intent.putExtra("error", "Network not available")
             sendBroadcast(intent)
@@ -513,7 +513,7 @@ class MqttService : Service() {
             Log.e(TAG, "Broker connectivity test failed - cannot connect")
             connectionState.postValue(ConnectionState.DISCONNECTED)
             // Send broadcast to notify UI of invalid IP error
-            val intent = Intent("com.example.cc.CONNECTION_STATUS")
+            val intent = Intent("com.bharath.carcrashdetection.CONNECTION_STATUS")
             intent.putExtra("status", "DISCONNECTED")
             intent.putExtra("error", "Invalid IP address or port")
             sendBroadcast(intent)
@@ -575,35 +575,35 @@ class MqttService : Service() {
                             
                             if (topic.startsWith("emergency/alerts/")) {
                                 Log.i(TAG, "🚨 Emergency alert received on topic: $topic")
-                                val intent = Intent("com.example.cc.EMERGENCY_ALERT_RECEIVED")
+                                val intent = Intent("com.bharath.carcrashdetection.EMERGENCY_ALERT_RECEIVED")
                                 intent.putExtra("alert_json", payload)
                                 intent.putExtra("topic", topic)
                                 sendBroadcast(intent)
                             } else if (topic.startsWith("emergency/test/")) {
                                 Log.i(TAG, "📝 Test message received on topic: $topic")
                                 // Handle test messages
-                                val intent = Intent("com.example.cc.SIMPLE_MESSAGE_RECEIVED")
+                                val intent = Intent("com.bharath.carcrashdetection.SIMPLE_MESSAGE_RECEIVED")
                                 intent.putExtra("topic", topic)
                                 intent.putExtra("message", payload)
                                 sendBroadcast(intent)
                             } else if (topic.startsWith("emergency/custom/")) {
                                 Log.i(TAG, "💬 Custom message received on topic: $topic")
                                 // Handle custom messages
-                                val intent = Intent("com.example.cc.CUSTOM_MESSAGE_RECEIVED")
+                                val intent = Intent("com.bharath.carcrashdetection.CUSTOM_MESSAGE_RECEIVED")
                                 intent.putExtra("topic", topic)
                                 intent.putExtra("message", payload)
                                 sendBroadcast(intent)
                             } else if (topic.startsWith("emergency/")) {
                                 Log.i(TAG, "📨 General emergency message received on topic: $topic")
                                 // Handle other emergency messages
-                                val intent = Intent("com.example.cc.GENERAL_MESSAGE_RECEIVED")
+                                val intent = Intent("com.bharath.carcrashdetection.GENERAL_MESSAGE_RECEIVED")
                                 intent.putExtra("topic", topic)
                                 intent.putExtra("message", payload)
                                 sendBroadcast(intent)
                             } else {
                                 Log.i(TAG, "📨 General message received on topic: $topic")
                                 // Handle other messages
-                                val intent = Intent("com.example.cc.GENERAL_MESSAGE_RECEIVED")
+                                val intent = Intent("com.bharath.carcrashdetection.GENERAL_MESSAGE_RECEIVED")
                                 intent.putExtra("topic", topic)
                                 intent.putExtra("message", payload)
                                 sendBroadcast(intent)
@@ -630,7 +630,7 @@ class MqttService : Service() {
                      isReconnecting = false
                      
                      // Send broadcast to notify UI of successful connection
-                     val intent = Intent("com.example.cc.CONNECTION_STATUS")
+                     val intent = Intent("com.bharath.carcrashdetection.CONNECTION_STATUS")
                      intent.putExtra("status", "CONNECTED")
                      sendBroadcast(intent)
                      
@@ -653,7 +653,7 @@ class MqttService : Service() {
                      isReconnecting = false
                      
                      // Send broadcast to notify UI of connection failure
-                     val intent = Intent("com.example.cc.CONNECTION_STATUS")
+                     val intent = Intent("com.bharath.carcrashdetection.CONNECTION_STATUS")
                      intent.putExtra("status", "DISCONNECTED")
                      intent.putExtra("error", "Failed to connect: ${exception?.message ?: "Unknown error"}")
                      sendBroadcast(intent)
@@ -748,7 +748,7 @@ class MqttService : Service() {
                         Log.w(TAG, "Invalid topic or payload for publishing")
                     }
                 }
-                "com.example.cc.RUN_TESTS" -> {
+                "com.bharath.carcrashdetection.RUN_TESTS" -> {
                     Log.i(TAG, "🧪 Running comprehensive MQTT tests via service intent")
                     // Run tests in background thread
                     Thread {
@@ -760,7 +760,7 @@ class MqttService : Service() {
                         }
                     }.start()
                 }
-                "com.example.cc.GET_SETTINGS" -> {
+                "com.bharath.carcrashdetection.GET_SETTINGS" -> {
                     Log.i(TAG, "📋 Getting MQTT settings via service intent")
                     val brokerConfig = getBrokerConfiguration()
                     val networkTest = testNetworkConnectivity()
