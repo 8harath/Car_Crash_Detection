@@ -1,10 +1,10 @@
-package com.example.cc.util
+package com.bharath.carcrashdetection.util
 
 import android.content.Context
 import android.util.Log
-import com.example.cc.data.repository.IncidentRepository
-import com.example.cc.data.repository.MedicalProfileRepository
-import com.example.cc.data.repository.UserRepository
+import com.bharath.carcrashdetection.data.repository.IncidentRepository
+import com.bharath.carcrashdetection.data.repository.MedicalProfileRepository
+import com.bharath.carcrashdetection.data.repository.UserRepository
 import kotlinx.coroutines.*
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicBoolean
