@@ -1,4 +1,4 @@
-package com.example.cc.data.model
+package com.bharath.carcrashdetection.data.model
 
 import kotlinx.serialization.Serializable
 
