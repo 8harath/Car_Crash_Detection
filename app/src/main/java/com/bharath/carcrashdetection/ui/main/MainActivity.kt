@@ -1,23 +1,23 @@
-package com.example.cc.ui.main
+package com.bharath.carcrashdetection.ui.main
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.example.cc.R
-import com.example.cc.data.model.UserRole
-import com.example.cc.ui.base.BaseActivity
-import com.example.cc.ui.publisher.PublisherActivity
-import com.example.cc.ui.subscriber.SubscriberActivity
-import com.example.cc.util.CrashHandler
-import com.example.cc.util.DatabaseTest
+import com.bharath.carcrashdetection.R
+import com.bharath.carcrashdetection.data.model.UserRole
+import com.bharath.carcrashdetection.ui.base.BaseActivity
+import com.bharath.carcrashdetection.ui.publisher.PublisherActivity
+import com.bharath.carcrashdetection.ui.subscriber.SubscriberActivity
+import com.bharath.carcrashdetection.util.CrashHandler
+import com.bharath.carcrashdetection.util.DatabaseTest
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 import android.view.View
 import android.util.Log
 import android.widget.Toast
-import com.example.cc.databinding.ActivityMainBinding
-import com.example.cc.databinding.*
+import com.bharath.carcrashdetection.databinding.ActivityMainBinding
+import com.bharath.carcrashdetection.databinding.*
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     
