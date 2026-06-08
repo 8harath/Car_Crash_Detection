@@ -1,17 +1,17 @@
-package com.example.cc.data.database
+package com.bharath.carcrashdetection.data.database
 
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import android.content.Context
-import com.example.cc.data.dao.IncidentDao
-import com.example.cc.data.dao.MedicalProfileDao
-import com.example.cc.data.dao.UserDao
-import com.example.cc.data.model.Incident
-import com.example.cc.data.model.MedicalProfile
-import com.example.cc.data.model.User
-import com.example.cc.data.util.Converters
+import com.bharath.carcrashdetection.data.dao.IncidentDao
+import com.bharath.carcrashdetection.data.dao.MedicalProfileDao
+import com.bharath.carcrashdetection.data.dao.UserDao
+import com.bharath.carcrashdetection.data.model.Incident
+import com.bharath.carcrashdetection.data.model.MedicalProfile
+import com.bharath.carcrashdetection.data.model.User
+import com.bharath.carcrashdetection.data.util.Converters
 
 @Database(
     entities = [User::class, MedicalProfile::class, Incident::class],

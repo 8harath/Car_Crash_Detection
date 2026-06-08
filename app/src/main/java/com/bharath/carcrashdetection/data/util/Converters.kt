@@ -1,9 +1,9 @@
-package com.example.cc.data.util
+package com.bharath.carcrashdetection.data.util
 
 import androidx.room.TypeConverter
-import com.example.cc.data.model.IncidentSeverity
-import com.example.cc.data.model.IncidentStatus
-import com.example.cc.data.model.UserRole
+import com.bharath.carcrashdetection.data.model.IncidentSeverity
+import com.bharath.carcrashdetection.data.model.IncidentStatus
+import com.bharath.carcrashdetection.data.model.UserRole
 
 class Converters {
     @TypeConverter
