@@ -1,8 +1,8 @@
-package com.example.cc.data.dao
+package com.bharath.carcrashdetection.data.dao
 
 import androidx.room.*
-import com.example.cc.data.model.Incident
-import com.example.cc.data.model.IncidentStatus
+import com.bharath.carcrashdetection.data.model.Incident
+import com.bharath.carcrashdetection.data.model.IncidentStatus
 import kotlinx.coroutines.flow.Flow
 
 @Dao
