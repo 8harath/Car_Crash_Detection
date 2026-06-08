@@ -1,17 +1,17 @@
-package com.example.cc.production
+package com.bharath.carcrashdetection.production
 
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
-import com.example.cc.BuildConfig
-import com.example.cc.data.database.AppDatabase
-import com.example.cc.util.SystemHealthMonitor
-import com.example.cc.util.MqttService
-import com.example.cc.util.Esp32Manager
-import com.example.cc.util.GpsService
-import com.example.cc.data.repository.UserRepository
-import com.example.cc.data.repository.MedicalProfileRepository
-import com.example.cc.data.repository.IncidentRepository
+import com.bharath.carcrashdetection.BuildConfig
+import com.bharath.carcrashdetection.data.database.AppDatabase
+import com.bharath.carcrashdetection.util.SystemHealthMonitor
+import com.bharath.carcrashdetection.util.MqttService
+import com.bharath.carcrashdetection.util.Esp32Manager
+import com.bharath.carcrashdetection.util.GpsService
+import com.bharath.carcrashdetection.data.repository.UserRepository
+import com.bharath.carcrashdetection.data.repository.MedicalProfileRepository
+import com.bharath.carcrashdetection.data.repository.IncidentRepository
 import kotlinx.coroutines.*
 import java.io.File
 import java.io.FileInputStream
