@@ -1,23 +1,23 @@
-package com.example.cc.di
+package com.bharath.carcrashdetection.di
 
-import com.example.cc.CarCrashDetectionApp
-import com.example.cc.data.dao.IncidentDao
-import com.example.cc.data.dao.MedicalProfileDao
-import com.example.cc.data.dao.UserDao
-import com.example.cc.data.database.AppDatabase
-import com.example.cc.data.repository.IncidentRepository
-import com.example.cc.data.repository.MedicalProfileRepository
-import com.example.cc.data.repository.UserRepository
-import com.example.cc.util.MqttService
-import com.example.cc.util.Esp32Manager
-import com.example.cc.util.GpsService
-import com.example.cc.testing.IntegrationTestSuite
-import com.example.cc.util.SystemHealthMonitor
-import com.example.cc.demo.DemoScenarioManager
-import com.example.cc.util.ErrorHandler
-import com.example.cc.production.ProductionMonitor
-import com.example.cc.production.MaintenanceManager
-import com.example.cc.production.InstallationManager
+import com.bharath.carcrashdetection.CarCrashDetectionApp
+import com.bharath.carcrashdetection.data.dao.IncidentDao
+import com.bharath.carcrashdetection.data.dao.MedicalProfileDao
+import com.bharath.carcrashdetection.data.dao.UserDao
+import com.bharath.carcrashdetection.data.database.AppDatabase
+import com.bharath.carcrashdetection.data.repository.IncidentRepository
+import com.bharath.carcrashdetection.data.repository.MedicalProfileRepository
+import com.bharath.carcrashdetection.data.repository.UserRepository
+import com.bharath.carcrashdetection.util.MqttService
+import com.bharath.carcrashdetection.util.Esp32Manager
+import com.bharath.carcrashdetection.util.GpsService
+import com.bharath.carcrashdetection.testing.IntegrationTestSuite
+import com.bharath.carcrashdetection.util.SystemHealthMonitor
+import com.bharath.carcrashdetection.demo.DemoScenarioManager
+import com.bharath.carcrashdetection.util.ErrorHandler
+import com.bharath.carcrashdetection.production.ProductionMonitor
+import com.bharath.carcrashdetection.production.MaintenanceManager
+import com.bharath.carcrashdetection.production.InstallationManager
 
 object AppModule {
     
