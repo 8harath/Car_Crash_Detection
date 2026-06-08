@@ -1,14 +1,14 @@
-package com.example.cc.ui.main
+package com.bharath.carcrashdetection.ui.main
 
 import androidx.lifecycle.viewModelScope
-import com.example.cc.data.model.User
-import com.example.cc.data.model.UserRole
-import com.example.cc.data.repository.UserRepository
-import com.example.cc.ui.base.BaseViewModel
+import com.bharath.carcrashdetection.data.model.User
+import com.bharath.carcrashdetection.data.model.UserRole
+import com.bharath.carcrashdetection.data.repository.UserRepository
+import com.bharath.carcrashdetection.ui.base.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import com.example.cc.di.AppModule
+import com.bharath.carcrashdetection.di.AppModule
 import android.util.Log
 
 class MainViewModel : BaseViewModel() {
