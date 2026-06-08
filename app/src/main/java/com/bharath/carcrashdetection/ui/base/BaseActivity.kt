@@ -1,4 +1,4 @@
-package com.example.cc.ui.base
+package com.bharath.carcrashdetection.ui.base
 
 import android.os.Bundle
 import android.widget.Toast
