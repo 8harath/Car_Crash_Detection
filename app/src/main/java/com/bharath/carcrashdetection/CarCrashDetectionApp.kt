@@ -1,9 +1,9 @@
-package com.example.cc
+package com.bharath.carcrashdetection
 
 import android.app.Application
-import com.example.cc.data.database.AppDatabase
-import com.example.cc.util.CrashHandler
-import com.example.cc.util.LogConfig
+import com.bharath.carcrashdetection.data.database.AppDatabase
+import com.bharath.carcrashdetection.util.CrashHandler
+import com.bharath.carcrashdetection.util.LogConfig
 
 class CarCrashDetectionApp : Application() {
     
