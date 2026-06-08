@@ -1,7 +1,7 @@
-package com.example.cc.data.repository
+package com.bharath.carcrashdetection.data.repository
 
-import com.example.cc.data.dao.MedicalProfileDao
-import com.example.cc.data.model.MedicalProfile
+import com.bharath.carcrashdetection.data.dao.MedicalProfileDao
+import com.bharath.carcrashdetection.data.model.MedicalProfile
 class MedicalProfileRepository(
     private val medicalProfileDao: MedicalProfileDao
 ) {

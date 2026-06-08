@@ -1,8 +1,8 @@
-package com.example.cc.data.repository
+package com.bharath.carcrashdetection.data.repository
 
-import com.example.cc.data.dao.UserDao
-import com.example.cc.data.model.User
-import com.example.cc.data.model.UserRole
+import com.bharath.carcrashdetection.data.dao.UserDao
+import com.bharath.carcrashdetection.data.model.User
+import com.bharath.carcrashdetection.data.model.UserRole
 import kotlinx.coroutines.flow.Flow
 class UserRepository(
     private val userDao: UserDao
