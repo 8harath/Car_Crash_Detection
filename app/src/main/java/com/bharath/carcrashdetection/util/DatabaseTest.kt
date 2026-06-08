@@ -1,10 +1,10 @@
-package com.example.cc.util
+package com.bharath.carcrashdetection.util
 
 import android.content.Context
 import android.util.Log
-import com.example.cc.data.model.User
-import com.example.cc.data.model.UserRole
-import com.example.cc.di.AppModule
+import com.bharath.carcrashdetection.data.model.User
+import com.bharath.carcrashdetection.data.model.UserRole
+import com.bharath.carcrashdetection.di.AppModule
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
