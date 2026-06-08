@@ -1,4 +1,4 @@
-package com.example.cc.util
+package com.bharath.carcrashdetection.util
 
 import android.Manifest
 import android.bluetooth.BluetoothAdapter
@@ -82,76 +82,9 @@ class Esp32BluetoothService(private val context: Context) {
     
     // Thread pool for background operations
     private val executor = Executors.newCachedThreadPool()
-    
-    // BroadcastReceiver for device discovery
-    private val discoveryReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            when (intent.action) {
-                BluetoothDevice.ACTION_FOUND -> {
-                    val device = intent.getParcelableExtra<BluetoothDevice>(
-                        BluetoothDevice.EXTRA_DEVICE
-                    )
-                    device?.let { 
-                        val currentList = _discoveredDevices.value.toMutableList()
-                        if (!currentList.contains(it)) {
-                            currentList.add(it)
-                            _discoveredDevices.value = currentList
-                            Log.d(TAG, "Discovered device: ${it.name ?: "Unknown"} (${it.address})")
-                        }
-                    }
-                }
-                BluetoothAdapter.ACTION_DISCOVERY_STARTED -> {
-                    Log.i(TAG, "Bluetooth discovery started")
-                }
-                BluetoothAdapter.ACTION_DISCOVERY_FINISHED -> {
-                    Log.i(TAG, "Bluetooth discovery finished")
-                }
-            }
-        }
-    }
-    
-    init {
-        initializeBluetooth()
-<<<<<<< HEAD
-        registerDiscoveryReceiver()
-    }
-    
-    private fun registerDiscoveryReceiver() {
-        val filter = IntentFilter().apply {
-            addAction(BluetoothDevice.ACTION_FOUND)
-            addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED)
-            addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)
-        }
-        context.registerReceiver(discoveryReceiver, filter)
-=======
-        registerBluetoothReceiver()
->>>>>>> mqtt
-    }
-    
-    private fun initializeBluetooth() {
-        val bluetoothManager = context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
-        bluetoothAdapter = bluetoothManager.adapter
-        
-        if (bluetoothAdapter == null) {
-            Log.e(TAG, "Bluetooth not supported on this device")
-            _connectionState.value = ConnectionState.ERROR
-        }
-    }
-    
-    private fun registerBluetoothReceiver() {
-        val filter = IntentFilter().apply {
-            addAction(BluetoothDevice.ACTION_FOUND)
-            addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED)
-            addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)
-            addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED)
-        }
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
-            context.registerReceiver(bluetoothReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
-        } else {
-            context.registerReceiver(bluetoothReceiver, filter)
-        }
-    }
-    
+
+    // BroadcastReceiver for device discovery and bonding events.
+    // Declared before init {} so it is initialized when registerBluetoothReceiver() runs.
     private val bluetoothReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             when (intent?.action) {
@@ -162,7 +95,7 @@ class Esp32BluetoothService(private val context: Context) {
                         @Suppress("DEPRECATION")
                         intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
                     }
-                    
+
                     device?.let {
                         Log.d(TAG, "Found device: ${it.name ?: "Unknown"} (${it.address})")
                         val currentDevices = _discoveredDevices.value.toMutableList()
@@ -188,13 +121,42 @@ class Esp32BluetoothService(private val context: Context) {
                         intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
                     }
                     val bondState = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, BluetoothDevice.ERROR)
-                    
+
                     Log.d(TAG, "Bond state changed for ${device?.name}: $bondState")
                 }
             }
         }
     }
-    
+
+    init {
+        initializeBluetooth()
+        registerBluetoothReceiver()
+    }
+
+    private fun initializeBluetooth() {
+        val bluetoothManager = context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+        bluetoothAdapter = bluetoothManager.adapter
+
+        if (bluetoothAdapter == null) {
+            Log.e(TAG, "Bluetooth not supported on this device")
+            _connectionState.value = ConnectionState.ERROR
+        }
+    }
+
+    private fun registerBluetoothReceiver() {
+        val filter = IntentFilter().apply {
+            addAction(BluetoothDevice.ACTION_FOUND)
+            addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED)
+            addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)
+            addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED)
+        }
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            context.registerReceiver(bluetoothReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
+        } else {
+            context.registerReceiver(bluetoothReceiver, filter)
+        }
+    }
+
     /**
      * Check if Bluetooth is enabled
      */
@@ -228,18 +190,16 @@ class Esp32BluetoothService(private val context: Context) {
             Log.w(TAG, "Bluetooth scan permission not granted")
             return
         }
-        
-<<<<<<< HEAD
-        // Clear previous discoveries
-        _discoveredDevices.value = emptyList()
-        Log.i(TAG, "Cleared previous device discoveries")
-=======
+
         if (locationPermission != PackageManager.PERMISSION_GRANTED) {
             Log.w(TAG, "Location permission not granted - required for Bluetooth scanning")
             return
         }
->>>>>>> mqtt
-        
+
+        // Clear previous discoveries
+        _discoveredDevices.value = emptyList()
+        Log.i(TAG, "Cleared previous device discoveries")
+
         executor.execute {
             try {
                 Log.d(TAG, "Starting Bluetooth discovery...")
@@ -522,12 +482,8 @@ class Esp32BluetoothService(private val context: Context) {
     fun cleanup() {
         try {
             disconnect()
-<<<<<<< HEAD
-            context.unregisterReceiver(discoveryReceiver)
-=======
             context.unregisterReceiver(bluetoothReceiver)
             executor.shutdown()
->>>>>>> mqtt
             Log.i(TAG, "Bluetooth service cleaned up")
         } catch (e: Exception) {
             Log.e(TAG, "Error during cleanup: ${e.message}")
