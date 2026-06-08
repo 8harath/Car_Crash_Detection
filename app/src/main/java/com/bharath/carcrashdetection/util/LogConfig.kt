@@ -1,4 +1,4 @@
-package com.example.cc.util
+package com.bharath.carcrashdetection.util
 
 import android.util.Log
 import android.os.Build
