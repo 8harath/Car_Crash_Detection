@@ -1,4 +1,4 @@
-package com.example.cc
+package com.bharath.carcrashdetection
 
 import org.junit.Test
 
