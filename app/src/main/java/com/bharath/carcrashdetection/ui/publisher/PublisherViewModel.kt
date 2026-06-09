@@ -1,9 +1,9 @@
-package com.example.cc.ui.publisher
+package com.bharath.carcrashdetection.ui.publisher
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cc.util.MqttService
-import com.example.cc.util.MqttConfig
+import com.bharath.carcrashdetection.util.MqttService
+import com.bharath.carcrashdetection.util.MqttConfig
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

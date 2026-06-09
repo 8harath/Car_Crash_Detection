@@ -1,11 +1,11 @@
-package com.example.cc.ui.publisher
+package com.bharath.carcrashdetection.ui.publisher
 
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.example.cc.ui.base.BaseActivity
-import com.example.cc.util.MqttService
-import com.example.cc.util.MqttConfig
+import com.bharath.carcrashdetection.ui.base.BaseActivity
+import com.bharath.carcrashdetection.util.MqttService
+import com.bharath.carcrashdetection.util.MqttConfig
 import kotlinx.coroutines.launch
 import android.view.View
 import android.util.Log
@@ -13,8 +13,8 @@ import android.content.Intent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.IntentFilter
-import com.example.cc.databinding.ActivityPublisherBinding
-import com.example.cc.databinding.*
+import com.bharath.carcrashdetection.databinding.ActivityPublisherBinding
+import com.bharath.carcrashdetection.databinding.*
 import com.google.android.material.snackbar.Snackbar
 
 class PublisherActivity : BaseActivity<ActivityPublisherBinding>() {
@@ -277,7 +277,7 @@ class PublisherActivity : BaseActivity<ActivityPublisherBinding>() {
         messageReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 when (intent?.action) {
-                    "com.example.cc.MESSAGE_PUBLISHED" -> {
+                    "com.bharath.carcrashdetection.MESSAGE_PUBLISHED" -> {
                         val topic = intent.getStringExtra("topic") ?: ""
                         val success = intent.getBooleanExtra("success", false)
                         val payload = intent.getStringExtra("payload") ?: ""
@@ -297,7 +297,7 @@ class PublisherActivity : BaseActivity<ActivityPublisherBinding>() {
         
         // Register the receiver
         val filter = IntentFilter().apply {
-            addAction("com.example.cc.MESSAGE_PUBLISHED")
+            addAction("com.bharath.carcrashdetection.MESSAGE_PUBLISHED")
         }
         registerReceiver(messageReceiver, filter)
         
@@ -308,7 +308,7 @@ class PublisherActivity : BaseActivity<ActivityPublisherBinding>() {
          connectionStatusReceiver = object : BroadcastReceiver() {
              override fun onReceive(context: Context?, intent: Intent?) {
                  when (intent?.action) {
-                     "com.example.cc.CONNECTION_STATUS" -> {
+                     "com.bharath.carcrashdetection.CONNECTION_STATUS" -> {
                          val status = intent.getStringExtra("status") ?: "DISCONNECTED"
                          val error = intent.getStringExtra("error")
                          
@@ -339,7 +339,7 @@ class PublisherActivity : BaseActivity<ActivityPublisherBinding>() {
          
          // Register the receiver
          val filter = IntentFilter().apply {
-             addAction("com.example.cc.CONNECTION_STATUS")
+             addAction("com.bharath.carcrashdetection.CONNECTION_STATUS")
          }
          registerReceiver(connectionStatusReceiver, filter)
          
