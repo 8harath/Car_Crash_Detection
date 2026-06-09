@@ -1,21 +1,21 @@
-package com.example.cc.ui.testing
+package com.bharath.carcrashdetection.ui.testing
 
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.example.cc.databinding.ActivityMqttTestBinding
-import com.example.cc.databinding.*
-import com.example.cc.util.MqttService
-import com.example.cc.util.MqttTopics
-import com.example.cc.util.NetworkHelper
-import com.example.cc.util.MqttConfig
+import com.bharath.carcrashdetection.databinding.ActivityMqttTestBinding
+import com.bharath.carcrashdetection.databinding.*
+import com.bharath.carcrashdetection.util.MqttService
+import com.bharath.carcrashdetection.util.MqttTopics
+import com.bharath.carcrashdetection.util.NetworkHelper
+import com.bharath.carcrashdetection.util.MqttConfig
 import kotlinx.coroutines.launch
 import android.content.Intent
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import com.example.cc.util.EmergencyAlertMessage
+import com.bharath.carcrashdetection.util.EmergencyAlertMessage
 import java.util.*
 
 class MqttTestActivity : AppCompatActivity() {

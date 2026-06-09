@@ -1,4 +1,4 @@
-package com.example.cc.ui.testing
+package com.bharath.carcrashdetection.ui.testing
 
 import android.os.Bundle
 import android.util.Log
@@ -6,10 +6,10 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.example.cc.R
-import com.example.cc.databinding.ActivityBluetoothTestBinding
-import com.example.cc.util.Esp32BluetoothService
-import com.example.cc.util.PermissionManager
+import com.bharath.carcrashdetection.R
+import com.bharath.carcrashdetection.databinding.ActivityBluetoothTestBinding
+import com.bharath.carcrashdetection.util.Esp32BluetoothService
+import com.bharath.carcrashdetection.util.PermissionManager
 
 class BluetoothTestActivity : AppCompatActivity() {
     
