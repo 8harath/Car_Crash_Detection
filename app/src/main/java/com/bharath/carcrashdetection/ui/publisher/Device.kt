@@ -1,6 +1,6 @@
-package com.example.cc.ui.publisher
+package com.bharath.carcrashdetection.ui.publisher
 
-import com.example.cc.util.Esp32Manager
+import com.bharath.carcrashdetection.util.Esp32Manager
 
 data class Device(
     val name: String,

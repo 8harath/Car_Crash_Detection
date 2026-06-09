@@ -1,4 +1,4 @@
-package com.example.cc.ui.publisher
+package com.bharath.carcrashdetection.ui.publisher
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cc.R
-import com.example.cc.util.Esp32Manager
+import com.bharath.carcrashdetection.R
+import com.bharath.carcrashdetection.util.Esp32Manager
 
 class DeviceAdapter(
     private val devices: MutableList<Device> = mutableListOf(),
