@@ -1,7 +1,7 @@
-package com.example.cc
+package com.bharath.carcrashdetection
 
 
-import com.example.cc.util.EmergencyAlertMessage
+import com.bharath.carcrashdetection.util.EmergencyAlertMessage
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
