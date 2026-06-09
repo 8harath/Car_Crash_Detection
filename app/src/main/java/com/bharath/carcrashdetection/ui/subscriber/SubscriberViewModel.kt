@@ -1,12 +1,12 @@
-package com.example.cc.ui.subscriber
+package com.bharath.carcrashdetection.ui.subscriber
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cc.util.MqttService
-import com.example.cc.util.MqttConfig
-import com.example.cc.data.model.Incident
-import com.example.cc.data.model.IncidentStatus
-import com.example.cc.data.model.IncidentSeverity
+import com.bharath.carcrashdetection.util.MqttService
+import com.bharath.carcrashdetection.util.MqttConfig
+import com.bharath.carcrashdetection.data.model.Incident
+import com.bharath.carcrashdetection.data.model.IncidentStatus
+import com.bharath.carcrashdetection.data.model.IncidentSeverity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import android.util.Log
 import android.content.Context
 import android.content.Intent
-import com.example.cc.util.MqttService.ConnectionState
+import com.bharath.carcrashdetection.util.MqttService.ConnectionState
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.decodeFromString
 

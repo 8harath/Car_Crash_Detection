@@ -1,12 +1,12 @@
-package com.example.cc.ui.subscriber
+package com.bharath.carcrashdetection.ui.subscriber
 
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.example.cc.ui.base.BaseActivity
-import com.example.cc.data.model.Incident
-import com.example.cc.databinding.ActivityIncidentDetailBinding
-import com.example.cc.databinding.*
+import com.bharath.carcrashdetection.ui.base.BaseActivity
+import com.bharath.carcrashdetection.data.model.Incident
+import com.bharath.carcrashdetection.databinding.ActivityIncidentDetailBinding
+import com.bharath.carcrashdetection.databinding.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import android.util.Log
@@ -74,9 +74,9 @@ class IncidentDetailActivity : BaseActivity<ActivityIncidentDetailBinding>() {
                 latitude = 40.7128,
                 longitude = -74.0060,
                 timestamp = System.currentTimeMillis(),
-                status = com.example.cc.data.model.IncidentStatus.ACTIVE,
+                status = com.bharath.carcrashdetection.data.model.IncidentStatus.ACTIVE,
                 description = "Emergency assistance needed - vehicle accident",
-                severity = com.example.cc.data.model.IncidentSeverity.HIGH,
+                severity = com.bharath.carcrashdetection.data.model.IncidentSeverity.HIGH,
                 createdAt = System.currentTimeMillis(),
                 updatedAt = System.currentTimeMillis()
             )

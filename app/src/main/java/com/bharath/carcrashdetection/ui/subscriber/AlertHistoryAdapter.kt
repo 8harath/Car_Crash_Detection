@@ -1,14 +1,14 @@
-package com.example.cc.ui.subscriber
+package com.bharath.carcrashdetection.ui.subscriber
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cc.data.model.Incident
-import com.example.cc.data.model.IncidentSeverity
-import com.example.cc.databinding.ItemAlertCardBinding
-import com.example.cc.databinding.*
+import com.bharath.carcrashdetection.data.model.Incident
+import com.bharath.carcrashdetection.data.model.IncidentSeverity
+import com.bharath.carcrashdetection.databinding.ItemAlertCardBinding
+import com.bharath.carcrashdetection.databinding.*
 import java.text.SimpleDateFormat
 import java.util.*
 

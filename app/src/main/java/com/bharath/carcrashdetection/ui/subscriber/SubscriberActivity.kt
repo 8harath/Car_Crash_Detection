@@ -1,12 +1,12 @@
-package com.example.cc.ui.subscriber
+package com.bharath.carcrashdetection.ui.subscriber
 
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.cc.ui.base.BaseActivity
-import com.example.cc.util.MqttService
-import com.example.cc.util.MqttConfig
+import com.bharath.carcrashdetection.ui.base.BaseActivity
+import com.bharath.carcrashdetection.util.MqttService
+import com.bharath.carcrashdetection.util.MqttConfig
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -19,8 +19,8 @@ import android.content.ClipData
 import android.content.BroadcastReceiver
 import android.content.IntentFilter
 import androidx.appcompat.app.AlertDialog
-import com.example.cc.databinding.ActivitySubscriberBinding
-import com.example.cc.databinding.*
+import com.bharath.carcrashdetection.databinding.ActivitySubscriberBinding
+import com.bharath.carcrashdetection.databinding.*
 import com.google.android.material.snackbar.Snackbar
 
 class SubscriberActivity : BaseActivity<ActivitySubscriberBinding>() {
@@ -202,7 +202,7 @@ class SubscriberActivity : BaseActivity<ActivitySubscriberBinding>() {
         try {
             // Send intent to MQTT service to run tests
             val serviceIntent = Intent(this, MqttService::class.java).apply {
-                action = "com.example.cc.RUN_TESTS"
+                action = "com.bharath.carcrashdetection.RUN_TESTS"
             }
             startService(serviceIntent)
             
@@ -237,7 +237,7 @@ class SubscriberActivity : BaseActivity<ActivitySubscriberBinding>() {
         try {
             // Send intent to MQTT service to get settings info
             val serviceIntent = Intent(this, MqttService::class.java).apply {
-                action = "com.example.cc.GET_SETTINGS"
+                action = "com.bharath.carcrashdetection.GET_SETTINGS"
             }
             startService(serviceIntent)
             
@@ -287,7 +287,7 @@ class SubscriberActivity : BaseActivity<ActivitySubscriberBinding>() {
         messageReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 when (intent?.action) {
-                    "com.example.cc.EMERGENCY_ALERT_RECEIVED" -> {
+                    "com.bharath.carcrashdetection.EMERGENCY_ALERT_RECEIVED" -> {
                         val alertJson = intent.getStringExtra("alert_json") ?: ""
                         val topic = intent.getStringExtra("topic") ?: ""
                         Log.i(TAG, "🚨 Received emergency alert broadcast: $topic")
@@ -296,7 +296,7 @@ class SubscriberActivity : BaseActivity<ActivitySubscriberBinding>() {
                         // Show real-time notification
                         showNewMessageNotification("🚨 Emergency Alert", alertJson.take(50))
                     }
-                    "com.example.cc.SIMPLE_MESSAGE_RECEIVED" -> {
+                    "com.bharath.carcrashdetection.SIMPLE_MESSAGE_RECEIVED" -> {
                         val message = intent.getStringExtra("message") ?: ""
                         val topic = intent.getStringExtra("topic") ?: ""
                         Log.i(TAG, "📝 Received test message broadcast: $topic")
@@ -305,7 +305,7 @@ class SubscriberActivity : BaseActivity<ActivitySubscriberBinding>() {
                         // Show real-time notification
                         showNewMessageNotification("📝 New Message", message.take(50))
                     }
-                    "com.example.cc.CUSTOM_MESSAGE_RECEIVED" -> {
+                    "com.bharath.carcrashdetection.CUSTOM_MESSAGE_RECEIVED" -> {
                         val message = intent.getStringExtra("message") ?: ""
                         val topic = intent.getStringExtra("topic") ?: ""
                         Log.i(TAG, "💬 Received custom message broadcast: $topic")
@@ -314,7 +314,7 @@ class SubscriberActivity : BaseActivity<ActivitySubscriberBinding>() {
                         // Show real-time notification
                         showNewMessageNotification("💬 Custom Message", message.take(50))
                     }
-                    "com.example.cc.GENERAL_MESSAGE_RECEIVED" -> {
+                    "com.bharath.carcrashdetection.GENERAL_MESSAGE_RECEIVED" -> {
                         val message = intent.getStringExtra("message") ?: ""
                         val topic = intent.getStringExtra("topic") ?: ""
                         Log.i(TAG, "📨 Received general message broadcast: $topic")
@@ -329,10 +329,10 @@ class SubscriberActivity : BaseActivity<ActivitySubscriberBinding>() {
         
         // Register the receiver
         val filter = IntentFilter().apply {
-            addAction("com.example.cc.EMERGENCY_ALERT_RECEIVED")
-            addAction("com.example.cc.SIMPLE_MESSAGE_RECEIVED")
-            addAction("com.example.cc.CUSTOM_MESSAGE_RECEIVED")
-            addAction("com.example.cc.GENERAL_MESSAGE_RECEIVED")
+            addAction("com.bharath.carcrashdetection.EMERGENCY_ALERT_RECEIVED")
+            addAction("com.bharath.carcrashdetection.SIMPLE_MESSAGE_RECEIVED")
+            addAction("com.bharath.carcrashdetection.CUSTOM_MESSAGE_RECEIVED")
+            addAction("com.bharath.carcrashdetection.GENERAL_MESSAGE_RECEIVED")
         }
         registerReceiver(messageReceiver, filter)
         
@@ -343,7 +343,7 @@ class SubscriberActivity : BaseActivity<ActivitySubscriberBinding>() {
          connectionStatusReceiver = object : BroadcastReceiver() {
              override fun onReceive(context: Context?, intent: Intent?) {
                  when (intent?.action) {
-                     "com.example.cc.CONNECTION_STATUS" -> {
+                     "com.bharath.carcrashdetection.CONNECTION_STATUS" -> {
                          val status = intent.getStringExtra("status") ?: "DISCONNECTED"
                          val error = intent.getStringExtra("error")
                          
@@ -374,7 +374,7 @@ class SubscriberActivity : BaseActivity<ActivitySubscriberBinding>() {
          
          // Register the receiver
          val filter = IntentFilter().apply {
-             addAction("com.example.cc.CONNECTION_STATUS")
+             addAction("com.bharath.carcrashdetection.CONNECTION_STATUS")
          }
          registerReceiver(connectionStatusReceiver, filter)
          
@@ -383,7 +383,7 @@ class SubscriberActivity : BaseActivity<ActivitySubscriberBinding>() {
      
 
     
-    private fun updateAlertsList(alerts: List<com.example.cc.data.model.Incident>) {
+    private fun updateAlertsList(alerts: List<com.bharath.carcrashdetection.data.model.Incident>) {
         if (alerts.isEmpty()) {
             binding.tvNoAlerts.visibility = View.VISIBLE
             binding.rvAlerts.visibility = View.GONE
