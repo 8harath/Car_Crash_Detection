@@ -1,12 +1,12 @@
-package com.example.cc.ui.settings
+package com.bharath.carcrashdetection.ui.settings
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
 import android.util.Log
-import com.example.cc.R
-import com.example.cc.util.MqttConfig
-import com.example.cc.util.NetworkHelper
+import com.bharath.carcrashdetection.R
+import com.bharath.carcrashdetection.util.MqttConfig
+import com.bharath.carcrashdetection.util.NetworkHelper
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView

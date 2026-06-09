@@ -1,12 +1,12 @@
-package com.example.cc.ui.settings
+package com.bharath.carcrashdetection.ui.settings
 
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cc.util.MqttConfig
-import com.example.cc.util.MqttService
-import com.example.cc.util.NetworkHelper
+import com.bharath.carcrashdetection.util.MqttConfig
+import com.bharath.carcrashdetection.util.MqttService
+import com.bharath.carcrashdetection.util.NetworkHelper
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -267,8 +267,8 @@ class MqttSettingsViewModel : ViewModel() {
      */
     private fun notifyMqttServiceSettingsChanged(context: Context) {
         try {
-            val intent = android.content.Intent(context, com.example.cc.util.MqttService::class.java).apply {
-                action = com.example.cc.util.MqttService.ACTION_UPDATE_SETTINGS
+            val intent = android.content.Intent(context, com.bharath.carcrashdetection.util.MqttService::class.java).apply {
+                action = com.bharath.carcrashdetection.util.MqttService.ACTION_UPDATE_SETTINGS
             }
             context.startService(intent)
             Log.i("MqttSettingsViewModel", "Notified MQTT service of settings change")
