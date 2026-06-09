@@ -1,4 +1,4 @@
-package com.example.cc.ui.production
+package com.bharath.carcrashdetection.ui.production
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.example.cc.R
-import com.example.cc.databinding.FragmentProductionDashboardBinding
-import com.example.cc.databinding.*
-import com.example.cc.production.*
+import com.bharath.carcrashdetection.R
+import com.bharath.carcrashdetection.databinding.FragmentProductionDashboardBinding
+import com.bharath.carcrashdetection.databinding.*
+import com.bharath.carcrashdetection.production.*
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
