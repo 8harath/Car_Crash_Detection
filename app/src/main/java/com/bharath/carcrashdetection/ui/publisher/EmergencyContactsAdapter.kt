@@ -1,4 +1,4 @@
-package com.example.cc.ui.publisher
+package com.bharath.carcrashdetection.ui.publisher
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cc.R
-import com.example.cc.data.model.EmergencyContact
+import com.bharath.carcrashdetection.R
+import com.bharath.carcrashdetection.data.model.EmergencyContact
 
 class EmergencyContactsAdapter(
     private val contacts: MutableList<EmergencyContact> = mutableListOf(),

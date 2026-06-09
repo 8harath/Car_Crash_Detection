@@ -1,4 +1,4 @@
-package com.example.cc.ui.publisher
+package com.bharath.carcrashdetection.ui.publisher
 
 import android.Manifest
 import android.app.Activity
@@ -15,10 +15,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.cc.R
-import com.example.cc.data.model.EmergencyContact
-import com.example.cc.data.model.MedicalProfile
-import com.example.cc.util.PermissionManager
+import com.bharath.carcrashdetection.R
+import com.bharath.carcrashdetection.data.model.EmergencyContact
+import com.bharath.carcrashdetection.data.model.MedicalProfile
+import com.bharath.carcrashdetection.util.PermissionManager
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream

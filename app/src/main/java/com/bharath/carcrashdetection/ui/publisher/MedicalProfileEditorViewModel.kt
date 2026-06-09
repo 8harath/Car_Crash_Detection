@@ -1,12 +1,12 @@
-package com.example.cc.ui.publisher
+package com.bharath.carcrashdetection.ui.publisher
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cc.data.model.EmergencyContact
-import com.example.cc.data.model.MedicalProfile
-import com.example.cc.data.repository.MedicalProfileRepository
-import com.example.cc.CarCrashDetectionApp
+import com.bharath.carcrashdetection.data.model.EmergencyContact
+import com.bharath.carcrashdetection.data.model.MedicalProfile
+import com.bharath.carcrashdetection.data.repository.MedicalProfileRepository
+import com.bharath.carcrashdetection.CarCrashDetectionApp
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
